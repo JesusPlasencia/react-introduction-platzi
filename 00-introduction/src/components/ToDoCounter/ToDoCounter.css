@@ -1,0 +1,9 @@
+.counter-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
+    text-shadow: 2px 5px 6px #023047;
+}
+
+.counter-title::before, .counter-title::after {
+    content: " 🎉 ";
+}

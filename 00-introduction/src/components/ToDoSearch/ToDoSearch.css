@@ -1,0 +1,26 @@
+.to-do-search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.to-do-search-container-input { 
+    border: 1px solid #bbb;
+    padding: 10px 15px;
+    width: 320px;
+    border-radius: 18px;
+    font-size: 1.2rem;
+    color: black
+}
+
+.to-do-search-container-input::placeholder {
+    color: #bbb;
+}
+
+.to-do-search-container-logo {
+    position: absolute;
+    left: 520px;
+    right: 0;
+    fill: black;
+}
