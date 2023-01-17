@@ -4,29 +4,13 @@ import { ToDoSearch } from '../components/ToDoSearch/ToDoSearch'
 import { ToDoList } from '../components/ToDoList/ToDoList'
 import { ToDoItem } from '../components/ToDoItem/ToDoItem'
 import { CreateToDoItem } from '../components/CreateToDoItem/CreateToDoItem'
-import { useState } from 'react'
-
-const ToDos = [
-  {
-    id: 1,
-    text: "Cortar Cebolla",
-    isCompleted: false
-  },
-  {
-    id: 2,
-    text: "Tomar Agua",
-    isCompleted: false
-  },
-  {
-    id: 3,
-    text: "Dibujar Componentes",
-    isCompleted: false
-  }
-]
+import { useState, useEffect } from 'react'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 export const App = () => {
 
-  const [todos, setTodos] = useState(ToDos)
+  const [todos, savedTodos] = useLocalStorage("TODOS_V1", [])
+  
   const [search, setSearch] = useState("")
 
   const completedTodos = todos.filter(item => item.isCompleted).length
@@ -46,15 +30,14 @@ export const App = () => {
     let currentState = todos[todoIndex].isCompleted
     let newTodos = [...todos];
     newTodos[todoIndex].isCompleted= !currentState
-
-    setTodos(newTodos)
+    savedTodos(newTodos)
   }
 
   const deleteTodos = (text) => {
     const todoIndex = todos.findIndex(todo => todo.text === text)
     let newTodos = [...todos]
     newTodos.splice(todoIndex, 1);
-    setTodos(newTodos)
+    savedTodos(newTodos)
   }
 
   return (
