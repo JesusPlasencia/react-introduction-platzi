@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import './ToDoSearch.css'
 
-export const ToDoSearch = () => {
+export const ToDoSearch = ({ search, setSearch }) => {
 
-  const [search, setSearch] = useState("")
+  // const [search, setSearch] = useState("")
 
   const handleValueChange = (event) => {
     setSearch(event.target.value)
@@ -11,12 +11,11 @@ export const ToDoSearch = () => {
   }
 
   return (
-    [<input
+    <input
       key="keyboard-search"
       className='TodoSearch'
       placeholder='Search some task'
       onChange={handleValueChange}
-    />,
-    <p key="word-searched">{search}</p>]
+    />
   )
 }

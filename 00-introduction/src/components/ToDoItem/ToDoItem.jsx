@@ -3,31 +3,24 @@ import './ToDoItem.css'
 
 export const ToDoItem = (props) => {
 
-  const handleOnComplete = () => {
-    console.log('You\'ve done this task.')
-  }
-
-  const handleOnDelete = () => {
-    console.log('You\'ve deleted this task.')
-  }
-
+  const { text, isCompleted, onComplete, onDelete } = props
 
   return (
     <li className='TodoItem'>
       <span
-        className={`Icon Icon-check ${props.isCompleted && 'Icon-check--active'}`}
-        onClick={handleOnComplete}
+        className={`Icon Icon-check ${isCompleted && 'Icon-check--active'}`}
+        onClick={onComplete}
       >
         ☑
       </span>
-      <p className={`TodoItem-p ${props.isCompleted && 'TodoItem-p--complete'}`}>
-        {props.text}
+      <p className={`TodoItem-p ${isCompleted && 'TodoItem-p--complete'}`}>
+        {text}
       </p>
       <span
         className="Icon Icon-delete"
-        onClick={handleOnDelete}
+        onClick={onDelete}
       >
-        ❌
+        ✖
       </span>
     </li>
   )
