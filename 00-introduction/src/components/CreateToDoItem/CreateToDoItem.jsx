@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ToDoContext } from '../ToDoContext/ToDoContext'
 import './CreateToDoItem.css'
 
 export const CreateToDoItem = () => {
 
+  const { openModal, setOpenModal } = useContext(ToDoContext)
+
   const handleClick = () => {
-    console.log('Click!')
+    setOpenModal(!openModal)
   }
 
   return (

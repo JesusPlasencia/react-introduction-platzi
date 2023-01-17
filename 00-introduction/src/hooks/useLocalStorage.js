@@ -1,30 +1,51 @@
-import React, { useState } from "react"
+import { useState, useEffect } from "react"
 
 const useLocalStorage = (keyLocal, initialValue) => {
- 
+
     const LOCAL_KEY = keyLocal
 
-    const localStorageTodos = localStorage.getItem(LOCAL_KEY)
-    let parsedTodos;
+    const [todos, setTodos] = useState(initialValue)
+    const [isFetching, setIsFetching] = useState(true)
+    const [hasError, setHasError] = useState(false)
 
-    if (!localStorageTodos) {
-        localStorage.setItem(LOCAL_KEY, JSON.stringify(initialValue))
-        parsedTodos = []
-    } else {
-        parsedTodos = JSON.parse(localStorageTodos)
-    }
+    useEffect(() => {
+        setTimeout(() => {
+            try {
+                const localStorageTodos = localStorage.getItem(LOCAL_KEY)
+                let parsedTodos;
 
-    const [todos, setTodos] = useState(parsedTodos)
+                if (!localStorageTodos) {
+                    localStorage.setItem(LOCAL_KEY, JSON.stringify(initialValue))
+                    parsedTodos = []
+                } else {
+                    parsedTodos = JSON.parse(localStorageTodos)
+                }
+
+                setTodos(parsedTodos)
+                setIsFetching(false)
+            } catch (e) {
+                setIsFetching(false)
+                setHasError(true)
+            }
+        }, 2000)
+    }, [])
+
 
     const savedTodos = (arrayTodos) => {
-        setTodos(arrayTodos)
-        localStorage.setItem(LOCAL_KEY, JSON.stringify(arrayTodos))
+        try {
+            localStorage.setItem(LOCAL_KEY, JSON.stringify(arrayTodos))
+            setTodos(arrayTodos)
+        } catch (e) {
+            setHasError(true)
+        }
     }
 
-    return [
+    return {
         todos,
-        savedTodos
-    ]
+        savedTodos,
+        isFetching,
+        hasError
+    }
 }
 
 export default useLocalStorage
