@@ -8,6 +8,7 @@ import { ToDoSearch } from '../ToDoSearch/ToDoSearch'
 import { useContext } from 'react'
 import { ModalToDo } from '../ModalToDo/ModalToDo'
 import './UI.css'
+import { FormToDo } from '../FormToDo/FormToDo'
 
 function UI() {
 
@@ -46,7 +47,7 @@ function UI() {
             
             {openModal && (
                 <ModalToDo>
-                    <p>PROPS</p>
+                    <FormToDo/>
                 </ModalToDo>
             )}
 

@@ -22,6 +22,23 @@ function TodoProvider(props) {
             task.text.toLowerCase().includes(search.toLowerCase()))
     }
 
+    const addTodo = (text) => {
+        let idGen = 0;
+        let newTodos = [...todos];
+        if (todos.length === 0) {
+            idGen = 1;
+        } else {
+            const lastItem = todos.sort((a, b) => a - b)
+            idGen = lastItem[todos.length - 1].id + 1;
+        }
+        newTodos.push({
+            id: idGen,
+            text: text,
+            isCompleted: false
+        });
+        savedTodos(newTodos);
+    }
+
     const completeTodo = (text) => {
         const todoIndex = todos.findIndex(todo => todo.text === text)
         let currentState = todos[todoIndex].isCompleted
@@ -46,6 +63,7 @@ function TodoProvider(props) {
             totalTodos,
             search,
             setSearch,
+            addTodo,
             completeTodo,
             deleteTodo,
             openModal,
