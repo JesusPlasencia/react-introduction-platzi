@@ -1,9 +1,18 @@
 import React from 'react'
-import { ReactComponent as Plus } from '../../assets/plus.svg'
 import './CreateToDoItem.css'
 
 export const CreateToDoItem = () => {
+
+  const handleClick = () => {
+    console.log('Click!')
+  }
+
   return (
-    <button className='to-do-add-item'></button>
+    <button
+      className="CreateTodoButton"
+      onClick={handleClick}
+    >
+      +
+    </button>
   )
 }

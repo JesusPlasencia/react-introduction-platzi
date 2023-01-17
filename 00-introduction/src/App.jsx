@@ -28,10 +28,7 @@ export const App = () => {
   return (
     <>
       <ToDoCounter />
-      <section style={{ display: 'flex', flexDirection: "row", justifyContent: "space-around", alignItems: "center" }}>
-        <ToDoSearch />
-        <CreateToDoItem />
-      </section>
+      <ToDoSearch />
       <ToDoList>
         {
           ToDos.map(item => {
@@ -42,6 +39,7 @@ export const App = () => {
           })
         }
       </ToDoList>
+      <CreateToDoItem />
     </>
   )
 }

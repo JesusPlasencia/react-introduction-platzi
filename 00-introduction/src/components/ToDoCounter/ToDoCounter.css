@@ -1,9 +1,6 @@
-.counter-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.8rem;
-    text-shadow: 2px 5px 6px #023047;
-}
-
-.counter-title::before, .counter-title::after {
-    content: " 🎉 ";
+.TodoCounter {
+    font-size: 24px;
+    text-align: center;
+    margin: 0;
+    padding: 48px;
 }

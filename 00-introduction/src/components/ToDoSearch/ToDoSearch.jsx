@@ -1,12 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './ToDoSearch.css'
-import { ReactComponent as Logo } from '../../assets/search.svg'
 
 export const ToDoSearch = () => {
+
+  const [search, setSearch] = useState("")
+
+  const handleValueChange = (event) => {
+    setSearch(event.target.value)
+    console.log('Search Word:', event.target.value)
+  }
+
   return (
-    <section className='to-do-search-container'>
-      <input className='to-do-search-container-input' placeholder='Search some task' />
-      <Logo className='to-do-search-container-logo' width={30} height={30} />
-    </section>
+    [<input
+      key="keyboard-search"
+      className='TodoSearch'
+      placeholder='Search some task'
+      onChange={handleValueChange}
+    />,
+    <p key="word-searched">{search}</p>]
   )
 }
