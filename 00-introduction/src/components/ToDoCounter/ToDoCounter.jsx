@@ -1,13 +1,10 @@
-import React, {useContext} from 'react'
-import { ToDoContext } from '../ToDoContext/ToDoContext'
+import React from 'react'
 import './ToDoCounter.css'
 
-export const ToDoCounter = () => {
-  
-  const {
+export const ToDoCounter = ({
     completedTodos,
     totalTodos
-  } = useContext(ToDoContext)
+  } ) => {
 
   let title = (completedTodos <= 0 && totalTodos <= 0)
     ?

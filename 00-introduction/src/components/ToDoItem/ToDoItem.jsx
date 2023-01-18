@@ -1,9 +1,7 @@
 import React from 'react'
 import './ToDoItem.css'
 
-export const ToDoItem = (props) => {
-
-  const { text, isCompleted, onComplete, onDelete } = props
+export const ToDoItem = ({ text, isCompleted, onComplete, onDelete }) => {
 
   return (
     <li className='TodoItem'>

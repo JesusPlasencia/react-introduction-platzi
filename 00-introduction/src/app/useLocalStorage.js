@@ -48,4 +48,4 @@ const useLocalStorage = (keyLocal, initialValue) => {
     }
 }
 
-export default useLocalStorage
+export { useLocalStorage }

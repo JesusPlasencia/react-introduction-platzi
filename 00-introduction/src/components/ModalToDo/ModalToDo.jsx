@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { createPortal } from 'react-dom'
-import { ToDoContext } from '../ToDoContext/ToDoContext'
 import './ModalToDo.css'
 
 function ModalToDo({ children }) {

@@ -1,10 +1,7 @@
-import React, { useContext } from 'react'
-import { ToDoContext } from '../ToDoContext/ToDoContext'
+import React from 'react'
 import './ToDoSearch.css'
 
-export const ToDoSearch = () => {
-
-  const { setSearch } = useContext(ToDoContext)
+export const ToDoSearch = ({ setSearch }) => {
 
   const handleValueChange = (event) => {
     setSearch(event.target.value)
