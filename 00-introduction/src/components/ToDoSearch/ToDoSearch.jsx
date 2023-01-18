@@ -1,7 +1,7 @@
 import React from 'react'
 import './ToDoSearch.css'
 
-export const ToDoSearch = ({ setSearch }) => {
+export const ToDoSearch = ({ setSearch, loading }) => {
 
   const handleValueChange = (event) => {
     setSearch(event.target.value)
@@ -13,6 +13,7 @@ export const ToDoSearch = ({ setSearch }) => {
       className='TodoSearch'
       placeholder='Tareas...'
       onChange={handleValueChange}
+      disabled={loading}
     />
   )
 }

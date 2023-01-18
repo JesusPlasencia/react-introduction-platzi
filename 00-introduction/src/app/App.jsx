@@ -6,6 +6,10 @@ import { ModalToDo } from '../components/ModalToDo/ModalToDo'
 import { FormToDo } from '../components/FormToDo/FormToDo'
 import { CreateToDoItem } from '../components/CreateToDoItem/CreateToDoItem'
 import { useTodos } from './ToDoContext'
+import { ToDoError } from '../components/ToDoError/ToDoError'
+import { ToDoLoading } from '../components/ToDoLoading/ToDoLoading'
+import { ToDoEmpty } from '../components/ToDoEmpty/ToDoEmpty'
+import { ToDoEmptySearch } from '../components/ToDoEmptySearch/ToDoEmptySearch'
 
 export const App = () => {
 
@@ -26,31 +30,34 @@ export const App = () => {
 
   return (
     <>
+      
       <Header
         completedTodos={completedTodos}
         totalTodos={totalTodos}
         search={search}
-        setSearch={setSearch} />
-      <ToDoList>
-        {isFetching && <p className='paragraph'>Cargando...</p>}
-        {hasError && <p className='paragraph'>Error obteniendo la información!</p>}
-        {(!isFetching && !searchedTodos) && <p>Crea tu Primer ToDo !!!</p>}
-        {
-          searchedTodos.map(item => {
-            const { id, isCompleted, text } = item
-            return (
-              <ToDoItem
-                key={id}
-                id={id}
-                text={text}
-                isCompleted={isCompleted}
-                onComplete={() => completeTodo(text)}
-                onDelete={() => deleteTodo(text)} />
-            )
-          })
-        }
-      </ToDoList>
-
+        setSearch={setSearch}
+        loading={isFetching} />
+      
+      <ToDoList
+        error={hasError}
+        loading={isFetching}
+        totalTodos={totalTodos}
+        searchedTodos={searchedTodos}
+        onError={() => <ToDoError />}
+        onLoading={() => <ToDoLoading />}
+        onEmptyTodos={() => <ToDoEmpty />}
+        onEmptySearch={() => <ToDoEmptySearch search={search} />}
+        render={(todo) => (
+          <ToDoItem
+            key={todo.id}
+            id={todo.id}
+            text={todo.text}
+            isCompleted={todo.isCompleted}
+            onComplete={() => completeTodo(todo.text)}
+            onDelete={() => deleteTodo(todo.text)} />
+        )}
+      />
+        
       {openModal && (
         <ModalToDo>
           <FormToDo
