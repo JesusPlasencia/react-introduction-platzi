@@ -10,6 +10,7 @@ import { ToDoError } from '../components/ToDoError/ToDoError'
 import { ToDoLoading } from '../components/ToDoLoading/ToDoLoading'
 import { ToDoEmpty } from '../components/ToDoEmpty/ToDoEmpty'
 import { ToDoEmptySearch } from '../components/ToDoEmptySearch/ToDoEmptySearch'
+import { ChangeAlertWithStorageListener } from '../ChangeAlert/change'
 
 export const App = () => {
 
@@ -25,7 +26,8 @@ export const App = () => {
     completeTodo,
     deleteTodo,
     openModal,
-    setOpenModal
+    setOpenModal,
+    sincronizeTodos
   } = useTodos()
 
   return (
@@ -70,6 +72,10 @@ export const App = () => {
       <CreateToDoItem
         openModal={openModal}
         setOpenModal={setOpenModal} />
+      
+      <ChangeAlertWithStorageListener
+        sincronize={sincronizeTodos}
+      />
     </>
   )
 }
