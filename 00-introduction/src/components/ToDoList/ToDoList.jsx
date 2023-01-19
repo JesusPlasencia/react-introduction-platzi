@@ -19,17 +19,6 @@ export const ToDoList = (props) => {
               props.onEmptySearch()  
           }
           {props.searchedTodos.map(props.render || props.children)}
-          {/* { props.render ??
-            props.searchedTodos.map(todo => props.render(todo))
-          } */}
-          {/* {
-            props.children ??
-            (
-              <ul>
-                {props.children}
-              </ul>
-            )
-          } */}
         </section>
   )
 }
