@@ -1,12 +1,38 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useReducer } from "react"
 
 const useLocalStorage = (keyLocal, initialValue) => {
 
     const LOCAL_KEY = keyLocal
-    const [sincronizedItem, setSincronizedItem] = useState(true)
-    const [todos, setTodos] = useState(initialValue)
-    const [isFetching, setIsFetching] = useState(true)
-    const [hasError, setHasError] = useState(false)
+    // ! useReducer
+    const [state, dispatch] = useReducer(reducer, initialState(initialValue))
+
+    const {
+        sincronizedItem,
+        hasError,
+        isFetching,
+        item
+    } = state
+
+    // ! ACTION CREATORS
+    const onSuccess = (parsedItem) => {
+        dispatch({ type: actionTypes.SUCCESS, payload: parsedItem })
+    }
+
+    const onError = (e) => {
+        dispatch({ type: actionTypes.ERROR, payload: e })
+    }
+
+    const onLoading = () => {
+        dispatch({ type: actionTypes.FETCHING })
+    }
+
+    const onSincronize = () => {
+        dispatch({ type: actionTypes.SINCRONIZE })
+    }
+
+    const onSave = (newItem) => {
+        dispatch({ type: actionTypes.SAVE, payload: newItem })
+    }
 
     useEffect(() => {
         setTimeout(() => {
@@ -21,37 +47,86 @@ const useLocalStorage = (keyLocal, initialValue) => {
                     parsedTodos = JSON.parse(localStorageTodos)
                 }
 
-                setTodos(parsedTodos)
-                setIsFetching(false)
-                setSincronizedItem(true)
+                onSave(parsedTodos)
             } catch (e) {
-                setIsFetching(false)
-                setHasError(true)
+                onError(e)
+            } finally {
+                onLoading()
             }
         }, 2000)
     }, [sincronizedItem])
 
-    const sincronizeItem = () => {
-        setIsFetching(true)
-        setSincronizedItem(false)
-    }
-
     const savedTodos = (arrayTodos) => {
         try {
             localStorage.setItem(LOCAL_KEY, JSON.stringify(arrayTodos))
-            setTodos(arrayTodos)
+            onSave(arrayTodos)
         } catch (e) {
-            setHasError(true)
+            onError(e)
         }
     }
 
+    const sincronizeItem = () => {
+        onLoading()
+        onSincronize()
+    }
+
     return {
-        todos,
+        item,
         savedTodos,
         isFetching,
         hasError,
         sincronizeItem
     }
+}
+
+const initialState = (initialValue) => (
+    {
+        sincronizeItem: true,
+        hasError: false,
+        isFetching: true,
+        item: initialValue
+    }
+)
+
+const actionTypes = {
+    ERROR: 'ERROR',
+    FETCHING: 'FETCHING',
+    SUCCESS: 'SUCCESS',
+    SINCRONIZE: 'SINCRONIZE',
+    SAVE: 'SAVE'
+}
+
+const reducerObject = (state, payload) => (
+    {
+        [actionTypes.ERROR]: {
+            ...state,
+            hasError: true
+        },
+        [actionTypes.FETCHING]: {
+            ...state,
+            isFetching: false
+        },
+        [actionTypes.SUCCESS]: {
+            ...state,
+            hasError: false,
+            isFetching: false,
+            sincronizeItem: true,
+            item: payload
+        },
+        [actionTypes.SINCRONIZE]: {
+            ...state,
+            sincronizeItem: false,
+            isFetching: true
+        },
+        [actionTypes.SAVE]: {
+            ...state,
+            item: payload
+        }
+    }
+)
+
+const reducer = (state, action) => {
+    return reducerObject(state, action.payload)[action.type] || state
 }
 
 export { useLocalStorage }

@@ -4,7 +4,7 @@ import { useLocalStorage } from "./useLocalStorage";
 function useTodos() {
 
     const {
-        todos,
+        item,
         savedTodos,
         isFetching,
         hasError,
@@ -14,26 +14,26 @@ function useTodos() {
     const [search, setSearch] = useState("")
     const [openModal, setOpenModal] = useState(false);
 
-    const completedTodos = todos.filter(item => item.isCompleted).length
-    const totalTodos = todos.length
+    const completedTodos = item.filter(el => el.isCompleted).length
+    const totalTodos = item.length
 
     let searchedTodos = []
 
     if (!search.length >= 1) {
-        searchedTodos = todos
+        searchedTodos = item
     } else {
-        searchedTodos = todos.filter(task =>
+        searchedTodos = item.filter(task =>
             task.text.toLowerCase().includes(search.toLowerCase()))
     }
 
     const addTodo = (text) => {
         let idGen = 0;
-        let newTodos = [...todos];
-        if (todos.length === 0) {
+        let newTodos = [...item];
+        if (item.length === 0) {
             idGen = 1;
         } else {
-            const lastItem = todos.sort((a, b) => a - b)
-            idGen = lastItem[todos.length - 1].id + 1;
+            const lastItem = item.sort((a, b) => a - b)
+            idGen = lastItem[item.length - 1].id + 1;
         }
         newTodos.push({
             id: idGen,
@@ -44,16 +44,16 @@ function useTodos() {
     }
 
     const completeTodo = (text) => {
-        const todoIndex = todos.findIndex(todo => todo.text === text)
-        let currentState = todos[todoIndex].isCompleted
-        let newTodos = [...todos];
+        const todoIndex = item.findIndex(todo => todo.text === text)
+        let currentState = item[todoIndex].isCompleted
+        let newTodos = [...item];
         newTodos[todoIndex].isCompleted = !currentState
         savedTodos(newTodos)
     }
 
     const deleteTodo = (text) => {
-        const todoIndex = todos.findIndex(todo => todo.text === text)
-        let newTodos = [...todos]
+        const todoIndex = item.findIndex(todo => todo.text === text)
+        let newTodos = [...item]
         newTodos.splice(todoIndex, 1);
         savedTodos(newTodos)
     }
